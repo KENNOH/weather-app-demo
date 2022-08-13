@@ -1,0 +1,60 @@
+# Verion of docker-compose to use 
+version: "3"
+services:
+
+  nginx:
+    build: ./nginx
+    container_name: Nginx
+    volumes:
+      - .:/weather-app-demo
+      - staticfiles:/home/app/static
+      - mediafiles:/home/app/media
+    ports:
+      - 8008:80
+    depends_on:
+      - weather-app-demo
+
+
+
+  weather-app-demo:
+    build:
+      context: . 
+    container_name: Django
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes: 
+      - .:/weather_app_demo
+      - staticfiles:/home/app/static
+      - mediafiles:/home/app/media
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations --noinput &&
+             python manage.py migrate --noinput &&
+             gunicorn --workers 3 --max-requests 50 --max-requests-jitter 25 -b 0.0.0.0:8000 weather_app_demo.wsgi --reload"
+    env_file:
+      - .env
+    environment:
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=db
+      - DB_PORT=$DB_PORT
+    depends_on:
+      - db
+
+
+  db:
+    image: postgres:14-alpine
+    container_name: PostgresDb
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+
+
+volumes:
+  staticfiles:
+  mediafiles:
