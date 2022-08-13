@@ -8,8 +8,8 @@ from .utils import *
 
 
 class ErrorResponseSerializer(serializers.Serializer):
-    error_message = serializers.CharField(required=True)
-    status = serializers.IntegerField(required=True)
+    error_message = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     
     class Meta:
         fields = ["error_message", "status"]
@@ -18,11 +18,11 @@ class ErrorResponseSerializer(serializers.Serializer):
 
 
 
-class TemparatureSerializer(serializers.Serializer):
-    maximum = serializers.DecimalField(max_digits=3, decimal_places=1, required=True)
-    minimum = serializers.DecimalField(max_digits=3, decimal_places=1, required=True)
-    average = serializers.DecimalField(max_digits=3, decimal_places=1, required=True)
-    median = serializers.DecimalField(max_digits=3, decimal_places=1, required=True)
+class TemparatureComputeSerializer(serializers.Serializer):
+    maximum = serializers.DecimalField(max_digits=3, decimal_places=1, required=False)
+    minimum = serializers.DecimalField(max_digits=3, decimal_places=1, required=False)
+    average = serializers.DecimalField(max_digits=3, decimal_places=1, required=False)
+    median = serializers.DecimalField(max_digits=3, decimal_places=1, required=False)
     
     class Meta:
         fields = ["maximum", "minimum","average","median"]

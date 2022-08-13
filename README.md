@@ -2,15 +2,25 @@
 
 # .env file
 Create a .env file in the root folder of the project with the following keys along with their appropriate values
+
     SECRET_KEY = 
+
     DB_NAME = 
+
     DB_USER = 
+
     DB_PASSWORD = 
+
     DB_HOST = 
+
     DB_PORT = 
+
     DEBUG = 
+
     WEATHER_API_KEY = 
+
     WEATHER_API_BASE_URL = https://api.weatherapi.com/v1
+
 
 
 
@@ -32,6 +42,8 @@ Python3.10 was used to develop the project, check the Pipfile
 # To start the server
 	python manage.py runserver
 
+Access the system on: http://127.0.0.1:8000/ 
+
 
 
 
@@ -44,9 +56,8 @@ After the above command executes successfully:
 # Run the images to run the system as daemon
     docker-compose up -d
 
+Access the system on: http://localhost:8008/
 
-
-Access the system on: http://127.0.0.1:8000/
 
 
 
